@@ -39,10 +39,10 @@ class FavoritesViewModel @Inject constructor(
         }
     }
 
-    fun addWorkout(id: Int,
-                 name: Int,
+    fun addWorkout(id: String,
+                 name: String,
                  description: String,
-                 timestamp: Timestamp,
+                 timestamp: String,
                  userId: String) = viewModelScope.launch {
         Log.d("FFFFIRRE", "Add:  $id, $name, $timestamp, $userId")
         addWorkoutResponse = Response.Loading

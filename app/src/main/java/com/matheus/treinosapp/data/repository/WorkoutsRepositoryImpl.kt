@@ -3,6 +3,7 @@ package com.matheus.treinosapp.data.repository
 import com.google.firebase.firestore.CollectionReference
 import com.matheus.treinosapp.domain.model.Response
 import com.matheus.treinosapp.domain.model.Workout
+import com.matheus.treinosapp.domain.repository.AddWorkoutResponse
 import com.matheus.treinosapp.domain.repository.WorkoutsRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -29,15 +30,15 @@ class WorkoutsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addWorkout(
-        id: Int,
-        name: Int,
+        id: String,
+        name: String,
         description: String,
-        timestamp: Timestamp,
-        userId: String,
-    )= try {
+        timestamp: String,
+        userId: String
+    ): AddWorkoutResponse = try {
         val idFirebase = workoutsRef.document().id
         val workout = Workout(
-            id = id.toString(),
+            id = id,
             description = description,
             name = name,
             timestamp = timestamp,

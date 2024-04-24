@@ -4,9 +4,13 @@ import java.sql.Timestamp
 
 data class Workout (
     val id: String,
-    val name: Int,
+    val name: String,
     val description: String,
-    val timestamp: Timestamp,
+    val timestamp: String,
     val userId: String,
     var idFirebase: String
-)
+) {
+    constructor() : this("", "", "", "", "", "")
+}
+
+

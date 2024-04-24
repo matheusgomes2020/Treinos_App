@@ -8,10 +8,10 @@ class AddWorkout(
 ) {
     suspend operator fun invoke(
 
-        id: Int,
-        name: Int,
+        id: String,
+        name: String,
         description: String,
-        timestamp: Timestamp,
+        timestamp: String,
         userId: String
     ) = repo.addWorkout(id, name, description, timestamp, userId)
 }

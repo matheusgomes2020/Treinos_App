@@ -17,7 +17,7 @@ interface WorkoutsRepository {
     //fun getWorkouts(): Flow<Response<List<Workout>>>
     fun getWorkouts(): Flow<WorkoutsResponse>
 
-    suspend fun addWorkout(id: Int,name: Int, description: String, timestamp: Timestamp, userId: String) : AddWorkoutResponse
+    suspend fun addWorkout(id: String,name: String, description: String, timestamp: String, userId: String) : AddWorkoutResponse
 
     suspend fun deleteWorkout(id: String) : DeleteWorkoutResponse
 
