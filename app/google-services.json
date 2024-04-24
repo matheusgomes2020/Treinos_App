@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1014208451820",
+    "project_id": "treinos-f629c",
+    "storage_bucket": "treinos-f629c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014208451820:android:1e32fa16363f922947c1c9",
+        "android_client_info": {
+          "package_name": "com.matheus.treinosapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDxcfyS3oGfNEJz9iDqUpJnU_w5UJ_bBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
