@@ -72,7 +72,7 @@ fun HomeNavGraph(navController: NavHostController, userData: UserData?, viewMode
             HomeScreen(navController = navController)
         }
         composable(route = HomeGraph.ADD) {
-            AddScreen(navController = navController, isSystemInDarkTheme = isSystemInDarkTheme())
+            AddScreen(navController = navController, isSystemInDarkTheme = isSystemInDarkTheme(), userData = userData)
         }
         composable(route = HomeGraph.FAVORITES) {
             FavoritesScreen(navController = navController, isSystemInDarkTheme(), userData = userData, onSignOut = onSignOut)
