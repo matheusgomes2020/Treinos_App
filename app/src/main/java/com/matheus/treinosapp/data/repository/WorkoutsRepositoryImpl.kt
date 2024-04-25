@@ -8,7 +8,6 @@ import com.matheus.treinosapp.domain.repository.WorkoutsRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import java.sql.Timestamp
 import javax.inject.Inject
 
 class WorkoutsRepositoryImpl @Inject constructor(
@@ -34,7 +33,8 @@ class WorkoutsRepositoryImpl @Inject constructor(
         name: String,
         description: String,
         timestamp: String,
-        userId: String
+        userId: String,
+        userName: String
     ): AddWorkoutResponse = try {
         val idFirebase = workoutsRef.document().id
         val workout = Workout(
@@ -43,6 +43,7 @@ class WorkoutsRepositoryImpl @Inject constructor(
             name = name,
             timestamp = timestamp,
             userId = userId,
+            username = userName,
             idFirebase = idFirebase
         )
         workoutsRef.document(idFirebase).set(workout).await()

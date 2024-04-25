@@ -1,5 +1,6 @@
 package com.matheus.treinosapp.presentation.favorites
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.matheus.treinosapp.domain.model.Response
@@ -24,6 +25,7 @@ fun Workouts(
                 workout.userId == userData?.userId
             }
             workoutsContent(listOfWorkouts)
+            Log.d("FFFFIRRE", "FOI???: $listOfWorkouts")
         }
         is Response.Failure -> print(moviesResponse.e)
     }

@@ -1,6 +1,7 @@
 package com.matheus.treinosapp.presentation.add
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,17 +56,21 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
         )
     }
 
-    Column {
+    Column(
+        modifier = Modifier
+            //.background(Color.Green)
+    ) {
         Text(text = "Add Screen")
         Button(onClick = {
             val currentTimeMillis = System.currentTimeMillis()
             val timeStamp = Timestamp(currentTimeMillis)
             favoriteViewModel.addWorkout(
-                "1234",
-                "1",
-                "exercício 1",
+                "43434234",
+                "3",
+                "Treino de costas",
                 timeStamp.toString(),
-                userId = userData!!.userId
+                userId = userData!!.userId,
+                userName = userData.username!!
             )
         }) {
             Text(text = "Adicionar")
@@ -138,7 +143,7 @@ fun WorkoutListItemFirebase(
                 }
             ),
     ) {
-        WorkoutItem( name = workout.name, id = workout.id )
+        WorkoutItem( name = workout.name, description = workout.description,id = workout.id, workout.username )
     }
 
 }
@@ -146,7 +151,9 @@ fun WorkoutListItemFirebase(
 @Composable
 fun WorkoutItem(
     name: String,
-    id: String
+    description: String,
+    id: String,
+    user: String
 ){
         Column(
             modifier = Modifier.padding(DpDimensions.Small)
@@ -155,15 +162,22 @@ fun WorkoutItem(
                 modifier = Modifier.width(110.dp),
                 text = name,
                 style = MaterialTheme.typography.titleSmall,
-                color = Color.White,
+                //color = Color.White,
                 maxLines = 1
             )
 
             Text(
                 modifier = Modifier.width(110.dp),
-                text = id,
+                text = description,
                 style = MaterialTheme.typography.titleSmall,
-                color = Color.White,
+                //color = Color.White,
+                //maxLines = 1
+            )
+            Text(
+                modifier = Modifier.width(110.dp),
+                text = user,
+                style = MaterialTheme.typography.titleSmall,
+                //color = Color.White,
                 maxLines = 1
             )
 

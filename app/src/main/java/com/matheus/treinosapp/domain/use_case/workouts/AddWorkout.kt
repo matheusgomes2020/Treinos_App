@@ -12,6 +12,7 @@ class AddWorkout(
         name: String,
         description: String,
         timestamp: String,
-        userId: String
-    ) = repo.addWorkout(id, name, description, timestamp, userId)
+        userId: String,
+        userName: String,
+    ) = repo.addWorkout(id, name, description, timestamp, userId, userName)
 }

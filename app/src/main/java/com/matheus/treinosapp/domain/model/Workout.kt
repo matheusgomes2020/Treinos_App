@@ -8,9 +8,10 @@ data class Workout (
     val description: String,
     val timestamp: String,
     val userId: String,
+    val username: String,
     var idFirebase: String
 ) {
-    constructor() : this("", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "", "")
 }
 
 
