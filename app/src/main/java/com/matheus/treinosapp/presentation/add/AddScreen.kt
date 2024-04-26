@@ -1,7 +1,6 @@
 package com.matheus.treinosapp.presentation.add
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,9 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.matheus.treinosapp.domain.model.Exercise
 import com.matheus.treinosapp.domain.model.Workout
+import com.matheus.treinosapp.domain.repository.Exercises
 import com.matheus.treinosapp.domain.repository.Workouts
 import com.matheus.treinosapp.presentation.UserData
+import com.matheus.treinosapp.presentation.favorites.Exercises
 import com.matheus.treinosapp.presentation.favorites.FavoritesViewModel
 import com.matheus.treinosapp.presentation.favorites.Workouts
 import com.matheus.treinosapp.ui.DpDimensions
@@ -76,6 +78,20 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
             Text(text = "Adicionar")
         }
 
+        Button(onClick = {
+            favoriteViewModel.addExercise(
+                id = "0012345678910",
+                name = "7",
+                imageUrl = "",
+                observations = "7 repetições de 15",
+                userId = userData!!.userId,
+                idWorkout = "para depois"
+
+            )
+        }) {
+            Text(text = "Adicionar exercício")
+        }
+
 
         Workouts(userData = userData) {workouts ->
 //            if (!workouts.isNullOrEmpty()) {
@@ -83,6 +99,15 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
                     workouts = workouts) {
 
               //  }
+            }
+        }
+
+        Exercises(userData = userData) {exercises ->
+//            if (!workouts.isNullOrEmpty()) {
+            ExercisesCell(navController = navController,
+                exercises = exercises) {
+
+                //  }
             }
         }
 
@@ -109,7 +134,32 @@ fun WorkoutsCell(
                 WorkoutListItemFirebase(
                     workout = workout,
                     onItemClick = {},
-                    deleteMovie = {}
+                    deleteWorkout = {}
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ExercisesCell(
+    navController: NavController,
+    exercises: Exercises,
+    deleteExercise: (idFirebase: String) -> Unit
+){
+
+    Box(
+    ) {
+
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(DpDimensions.Small),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+        ) {
+            items(exercises) { exercise ->
+                ExerciseListItemFirebase(
+                    exercise = exercise,
+                    onItemClick = {},
+                    deleteExercise = {}
                 )
             }
         }
@@ -120,7 +170,7 @@ fun WorkoutsCell(
 @Composable
 fun WorkoutListItemFirebase(
     workout: Workout,
-    deleteMovie: () -> Unit,
+    deleteWorkout: () -> Unit,
     onItemClick: (Workout) -> Unit,
     height: Dp = 170.dp
 
@@ -143,7 +193,91 @@ fun WorkoutListItemFirebase(
                 }
             ),
     ) {
-        WorkoutItem( name = workout.name, description = workout.description,id = workout.id, workout.username )
+        Column(
+            modifier = Modifier.padding(DpDimensions.Small)
+        ) {
+            Text(
+                modifier = Modifier.width(110.dp),
+                text = workout.name,
+                style = MaterialTheme.typography.titleSmall,
+                //color = Color.White,
+                maxLines = 1
+            )
+
+            Text(
+                modifier = Modifier.width(110.dp),
+                text = workout.description,
+                style = MaterialTheme.typography.titleSmall,
+                //color = Color.White,
+                //maxLines = 1
+            )
+            Text(
+                modifier = Modifier.width(110.dp),
+                text = workout.username,
+                style = MaterialTheme.typography.titleSmall,
+                //color = Color.White,
+                maxLines = 1
+            )
+
+        }
+    }
+
+}
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@Composable
+fun ExerciseListItemFirebase(
+    exercise: Exercise,
+    deleteExercise: () -> Unit,
+    onItemClick: (Exercise) -> Unit,
+    height: Dp = 170.dp
+
+) {
+    val context = LocalContext.current
+    val bottomSheetState = rememberModalBottomSheetState()
+    var isLogoutSheetOpen by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    Surface(
+        shape = RoundedCornerShape(DpDimensions.Dp20),
+        modifier = Modifier
+            .width(120.dp)
+            .height(height)
+            .combinedClickable(
+                onClick = { onItemClick(exercise) },
+                onLongClick = {
+                    isLogoutSheetOpen = true
+                }
+            ),
+    ) {
+        Column(
+            modifier = Modifier.padding(DpDimensions.Small)
+        ) {
+            Text(
+                modifier = Modifier.width(110.dp),
+                text = exercise.name,
+                style = MaterialTheme.typography.titleSmall,
+                //color = Color.White,
+                maxLines = 1
+            )
+
+            Text(
+                modifier = Modifier.width(110.dp),
+                text = exercise.observations,
+                style = MaterialTheme.typography.titleSmall,
+                //color = Color.White,
+                //maxLines = 1
+            )
+            Text(
+                modifier = Modifier.width(110.dp),
+                text = exercise.idWorkout,
+                style = MaterialTheme.typography.titleSmall,
+                //color = Color.White,
+                maxLines = 1
+            )
+
+        }
     }
 
 }

@@ -7,13 +7,15 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matheus.treinosapp.domain.model.Response
+import com.matheus.treinosapp.domain.repository.AddExerciseResponse
 import com.matheus.treinosapp.domain.repository.AddWorkoutResponse
+import com.matheus.treinosapp.domain.repository.DeleteExerciseResponse
 import com.matheus.treinosapp.domain.repository.DeleteWorkoutResponse
+import com.matheus.treinosapp.domain.repository.ExercisesResponse
 import com.matheus.treinosapp.domain.repository.WorkoutsResponse
-import com.matheus.treinosapp.domain.use_case.workouts.UseCases
+import com.matheus.treinosapp.domain.use_case.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.sql.Timestamp
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,8 +30,16 @@ class FavoritesViewModel @Inject constructor(
     var deleteWorkoutResponse by mutableStateOf<DeleteWorkoutResponse>(Response.Success(false))
         private set
 
+    var exercisesResponse by mutableStateOf<ExercisesResponse>(Response.Loading)
+        private set
+    var addExerciseResponse by mutableStateOf<AddExerciseResponse>(Response.Success(false))
+        private set
+    var deleteExerciseResponse by mutableStateOf<DeleteExerciseResponse>(Response.Success(false))
+        private set
+
     init {
         getWorkouts()
+        getExercises()
     }
 
     private fun getWorkouts() = viewModelScope.launch {
@@ -57,5 +67,32 @@ class FavoritesViewModel @Inject constructor(
         deleteWorkoutResponse = Response.Loading
         deleteWorkoutResponse = useCases.deleteWorkout( idFirebase )
     }
+
+    private fun getExercises() = viewModelScope.launch {
+        useCases.getExercises().collect { response ->
+            exercisesResponse = response
+            Log.d("FFFFIRRE", "getmovies: " + response)
+        }
+    }
+
+    fun addExercise(id: String,
+                   name: String,
+                    imageUrl: String,
+                    observations: String,
+                    userId: String,
+                    idWorkout: String
+    ) = viewModelScope.launch {
+        Log.d("FFFFIRRE", "Add:  $id, $name, $imageUrl, $userId")
+        addExerciseResponse = Response.Loading
+        addExerciseResponse = useCases.addExercise(id, name, imageUrl, observations, userId, idWorkout)
+        Log.d("FFFFIRRE", "Add: " + addExerciseResponse.toString())
+
+    }
+
+    fun deleteExercise(idFirebase: String) = viewModelScope.launch {
+        deleteExerciseResponse = Response.Loading
+        deleteExerciseResponse = useCases.deleteExercise( idFirebase )
+    }
+
 }
 

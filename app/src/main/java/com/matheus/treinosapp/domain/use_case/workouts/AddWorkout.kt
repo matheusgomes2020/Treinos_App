@@ -1,10 +1,9 @@
 package com.matheus.treinosapp.domain.use_case.workouts
 
-import com.matheus.treinosapp.domain.repository.WorkoutsRepository
-import java.sql.Timestamp
+import com.matheus.treinosapp.domain.repository.FirestoreRepository
 
 class AddWorkout(
-    private val repo: WorkoutsRepository
+    private val repo: FirestoreRepository
 ) {
     suspend operator fun invoke(
 

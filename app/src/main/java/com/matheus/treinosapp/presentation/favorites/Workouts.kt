@@ -17,9 +17,9 @@ fun Workouts(
 ) {
 
     var listOfWorkouts = emptyList<Workout>()
-    when(val moviesResponse = viewModel.workoutsResponse) {
+    when(val workoutsResponse = viewModel.workoutsResponse) {
         is Response.Loading -> ProgressBar()
-        is Response.Success -> moviesResponse.data.let { workouts ->
+        is Response.Success -> workoutsResponse.data.let { workouts ->
             listOfWorkouts = workouts
             listOfWorkouts = workouts.filter { workout ->
                 workout.userId == userData?.userId
@@ -27,7 +27,7 @@ fun Workouts(
             workoutsContent(listOfWorkouts)
             Log.d("FFFFIRRE", "FOI???: $listOfWorkouts")
         }
-        is Response.Failure -> print(moviesResponse.e)
+        is Response.Failure -> print(workoutsResponse.e)
     }
 
 }
