@@ -21,6 +21,26 @@ fun Exercises(
         is Response.Loading -> ProgressBar()
         is Response.Success -> exercisesResponse.data.let { exercises ->
             listOfExercises = exercises
+            exercisesContent(listOfExercises)
+            Log.d("FFFFIRRE", "FOI???: $listOfExercises")
+        }
+        is Response.Failure -> print(exercisesResponse.e)
+    }
+
+}
+
+@Composable
+fun ExercisesUser(
+    userData: UserData?,
+    viewModel: FavoritesViewModel = hiltViewModel(),
+    exercisesContent: @Composable (exercises: Exercises ) -> Unit
+) {
+
+    var listOfExercises = emptyList<Exercise>()
+    when(val exercisesResponse = viewModel.exercisesResponse) {
+        is Response.Loading -> ProgressBar()
+        is Response.Success -> exercisesResponse.data.let { exercises ->
+            listOfExercises = exercises
             listOfExercises = exercises.filter { exercise ->
                 exercise.userId == userData?.userId
             }

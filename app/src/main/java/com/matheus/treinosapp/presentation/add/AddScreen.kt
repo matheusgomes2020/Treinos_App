@@ -1,34 +1,45 @@
 package com.matheus.treinosapp.presentation.add
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -45,10 +56,15 @@ import java.sql.Timestamp
 
 @Composable
 fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
-              navController: NavController, isSystemInDarkTheme: Boolean,
-              userData: UserData?,){
+              navController: NavController,
+              isSystemInDarkTheme: Boolean,
+              userData: UserData?
+){
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = !isSystemInDarkTheme
+
+    var nome by remember { mutableStateOf("") }
+    var descricao by remember { mutableStateOf("") }
 
     SideEffect {
         systemUiController.setSystemBarsColor(
@@ -62,258 +78,112 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
         modifier = Modifier
             //.background(Color.Green)
     ) {
-        Text(text = "Add Screen")
-        Button(onClick = {
-            val currentTimeMillis = System.currentTimeMillis()
-            val timeStamp = Timestamp(currentTimeMillis)
-            favoriteViewModel.addWorkout(
-                "43434234",
-                "3",
-                "Treino de costas",
-                timeStamp.toString(),
-                userId = userData!!.userId,
-                userName = userData.username!!
-            )
-        }) {
-            Text(text = "Adicionar")
-        }
 
-        Button(onClick = {
-            favoriteViewModel.addExercise(
-                id = "0012345678910",
-                name = "7",
-                imageUrl = "",
-                observations = "7 repetições de 15",
-                userId = userData!!.userId,
-                idWorkout = "para depois"
-
-            )
-        }) {
-            Text(text = "Adicionar exercício")
-        }
-
-
-        Workouts(userData = userData) {workouts ->
-//            if (!workouts.isNullOrEmpty()) {
-                WorkoutsCell(navController = navController,
-                    workouts = workouts) {
-
-              //  }
-            }
-        }
-
-        Exercises(userData = userData) {exercises ->
-//            if (!workouts.isNullOrEmpty()) {
-            ExercisesCell(navController = navController,
-                exercises = exercises) {
-
-                //  }
-            }
-        }
-
-    }
-
-
-}
-
-@Composable
-fun WorkoutsCell(
-    navController: NavController,
-    workouts: Workouts,
-    deleteWorkout: (idFirebase: String) -> Unit
-){
-
-    Box(
-    ) {
-
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(DpDimensions.Small),
-            contentPadding = PaddingValues(horizontal = 16.dp),
+        Column(
+            modifier = Modifier
+                .padding(DpDimensions.Normal)
         ) {
-            items(workouts) { workout ->
-                WorkoutListItemFirebase(
-                    workout = workout,
-                    onItemClick = {},
-                    deleteWorkout = {}
+            Text(
+                text = "Nome *",
+                style = MaterialTheme.typography.headlineSmall,
+                fontSize = 20.sp
+            )
+
+            TextField(
+                value = nome,
+                onValueChange = {
+                    nome = it
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+//                        label = {Text(text = "Senha") },
+                placeholder = {
+                    Text(
+                        text = "Digite o nome do treino",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Magenta,
+                    focusedIndicatorColor = Color.Gray,
+                    unfocusedIndicatorColor = Color.Gray,
+                    disabledIndicatorColor = Color.Red,
+                    cursorColor = MaterialTheme.colorScheme.onPrimary
+                ),                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
                 )
-            }
-        }
-    }
-}
+            )
 
-@Composable
-fun ExercisesCell(
-    navController: NavController,
-    exercises: Exercises,
-    deleteExercise: (idFirebase: String) -> Unit
-){
+            Text(
+                text = "Descrição *",
+                style = MaterialTheme.typography.headlineSmall,
+                fontSize = 20.sp
+            )
 
-    Box(
-    ) {
-
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(DpDimensions.Small),
-            contentPadding = PaddingValues(horizontal = 16.dp),
-        ) {
-            items(exercises) { exercise ->
-                ExerciseListItemFirebase(
-                    exercise = exercise,
-                    onItemClick = {},
-                    deleteExercise = {}
+            TextField(
+                value = descricao,
+                onValueChange = {
+                    descricao = it
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+//                        label = {Text(text = "Senha") },
+                placeholder = {
+                    Text(
+                        text = "Digite o descrição do treino",
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Magenta,
+                    focusedIndicatorColor = Color.Gray,
+                    unfocusedIndicatorColor = Color.Gray,
+                    disabledIndicatorColor = Color.Red,
+                    cursorColor = MaterialTheme.colorScheme.onPrimary
+                ),                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.None,
+                    autoCorrect = false,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
                 )
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+            Button(
+                shape = RoundedCornerShape(DpDimensions.Normal),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = {
+                    val currentTimeMillis = System.currentTimeMillis()
+                    val timeStamp = Timestamp(currentTimeMillis)
+
+                    favoriteViewModel.addWorkout(
+                        "43434234",
+                        nome,
+                        descricao,
+                        timeStamp.toString(),
+                        userId = userData!!.userId,
+                        userName = userData.username!!
+                    ).let {it ->
+
+                        Log.d("SUCESSO?", "AddScreen: SUCESSO!!! ${it.children}")
+                    }
+                },
+            ) {
+
+                Text(text = "Salvar", style = MaterialTheme.typography.titleMedium)
             }
         }
-    }
-}
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
-@Composable
-fun WorkoutListItemFirebase(
-    workout: Workout,
-    deleteWorkout: () -> Unit,
-    onItemClick: (Workout) -> Unit,
-    height: Dp = 170.dp
-
-) {
-    val context = LocalContext.current
-    val bottomSheetState = rememberModalBottomSheetState()
-    var isLogoutSheetOpen by rememberSaveable {
-        mutableStateOf(false)
     }
 
-    Surface(
-        shape = RoundedCornerShape(DpDimensions.Dp20),
-        modifier = Modifier
-            .width(120.dp)
-            .height(height)
-            .combinedClickable(
-                onClick = { onItemClick(workout) },
-                onLongClick = {
-                    isLogoutSheetOpen = true
-                }
-            ),
-    ) {
-        Column(
-            modifier = Modifier.padding(DpDimensions.Small)
-        ) {
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = workout.name,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                maxLines = 1
-            )
-
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = workout.description,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                //maxLines = 1
-            )
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = workout.username,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                maxLines = 1
-            )
-
-        }
-    }
 
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
-@Composable
-fun ExerciseListItemFirebase(
-    exercise: Exercise,
-    deleteExercise: () -> Unit,
-    onItemClick: (Exercise) -> Unit,
-    height: Dp = 170.dp
 
-) {
-    val context = LocalContext.current
-    val bottomSheetState = rememberModalBottomSheetState()
-    var isLogoutSheetOpen by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    Surface(
-        shape = RoundedCornerShape(DpDimensions.Dp20),
-        modifier = Modifier
-            .width(120.dp)
-            .height(height)
-            .combinedClickable(
-                onClick = { onItemClick(exercise) },
-                onLongClick = {
-                    isLogoutSheetOpen = true
-                }
-            ),
-    ) {
-        Column(
-            modifier = Modifier.padding(DpDimensions.Small)
-        ) {
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = exercise.name,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                maxLines = 1
-            )
-
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = exercise.observations,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                //maxLines = 1
-            )
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = exercise.idWorkout,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                maxLines = 1
-            )
-
-        }
-    }
-
-}
-
-@Composable
-fun WorkoutItem(
-    name: String,
-    description: String,
-    id: String,
-    user: String
-){
-        Column(
-            modifier = Modifier.padding(DpDimensions.Small)
-        ) {
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = name,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                maxLines = 1
-            )
-
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = description,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                //maxLines = 1
-            )
-            Text(
-                modifier = Modifier.width(110.dp),
-                text = user,
-                style = MaterialTheme.typography.titleSmall,
-                //color = Color.White,
-                maxLines = 1
-            )
-
-    }
-}
