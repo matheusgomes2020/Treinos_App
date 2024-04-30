@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.matheus.treinosapp.R
 import com.matheus.treinosapp.ui.DpDimensions
+import com.matheus.treinosapp.ui.theme.TreinosAppTheme
 
 @Composable
 fun MainAppBar(
@@ -57,7 +58,8 @@ fun MainAppBar(
             Image(
                 painter = painterResource(id = R.drawable.weight),
                 contentDescription = "Logo",
-                modifier = Modifier.size(DpDimensions.Dp30)
+                modifier = Modifier
+                    .size(DpDimensions.Dp30)
                     .clickable { onLogoClick() }
             )
 
@@ -82,7 +84,7 @@ fun MainAppBar(
                         .size(35.dp)
                         .clip(CircleShape)
                         .clickable {
-                                   onSearchClick()
+                            onSearchClick()
                         },
                     contentScale = ContentScale.Crop,
                 )
@@ -96,5 +98,56 @@ fun MainAppBar(
             }
 
         }
+    }
+}
+
+@Composable
+fun AppBarWithBack(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {},
+    title: String,
+    backIcon: ImageVector
+) {
+    Box(
+        modifier = modifier.background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(
+                horizontal = DpDimensions.Smallest,
+                vertical = DpDimensions.Small
+            )
+        ) {
+
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = backIcon,
+                    contentDescription = null,
+                    //tint = MaterialTheme.colorScheme.inversePrimary
+                )
+            }
+
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineMedium,
+                //color = MaterialTheme.colorScheme.inversePrimary,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = DpDimensions.Normal),
+                textAlign = TextAlign.Start,
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AppBarWithSearchPreview() {
+    TreinosAppTheme {
+        AppBarWithBack(
+            title = "Aventura",
+            backIcon = Icons.Default.ArrowBack
+        )
     }
 }

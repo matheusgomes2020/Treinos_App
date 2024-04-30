@@ -23,9 +23,21 @@ object SplashGraph {
     const val SPLASH = "splash"
 }
 
+object WorkoutsDetailsGraph {
+    const val ROOT = "workouts_details_graph"
+    const val DETAILS = "details"
+}
+
+object AddExercisesGraph {
+    const val ROOT = "add_exercises_graph"
+    const val ADD = "add"
+}
+
 object AppGraph {
     val initial = RootGraph
     val auth = AuthGraph
+    val workouts_details = WorkoutsDetailsGraph
+    val add_exercises = AddExercisesGraph
     val home = HomeGraph
     val splash = SplashGraph
 

@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.presentation.add
+package com.matheus.treinosapp.presentation.add_exercises
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -35,16 +35,21 @@ import com.matheus.treinosapp.ui.DpDimensions
 import java.sql.Timestamp
 
 @Composable
-fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
+fun AddExercisesScreen(
+    favoriteViewModel: FavoritesViewModel = hiltViewModel(),
+    addExercisesViewModel: AddExercisesViewModel = hiltViewModel(),
               navController: NavController,
               isSystemInDarkTheme: Boolean,
               userData: UserData?
 ){
+
+    val state = addExercisesViewModel.state.value
+
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = !isSystemInDarkTheme
 
     var nome by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
+    var observacoes by remember { mutableStateOf("") }
 
     SideEffect {
         systemUiController.setSystemBarsColor(
@@ -56,8 +61,30 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
 
     Column(
         modifier = Modifier
-            //.background(Color.Green)
+        //.background(Color.Green)
     ) {
+
+        Text(text = "WORKOUT ID")
+        Text(text = state.workoutId)
+
+        Text(text = "USER NAME")
+        Text(text = state.userName)
+
+
+//        Text(text = "STATE")
+//        Text(text = state.exercise!!.toString())
+//
+//        Text(text = "ID")
+//        Text(text = state.exercise!!.idFirebase)
+//
+//        Text(text = "NAME")
+//        Text(text = state.exercise!!.name)
+//
+//        Text(text = "IMAGE_URL")
+//        Text(text = state.exercise!!.imageUrl)
+//
+//        Text(text = "OBSERVATIONS")
+//        Text(text = state.exercise!!.observations)
 
         Column(
             modifier = Modifier
@@ -79,7 +106,7 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
 //                        label = {Text(text = "Senha") },
                 placeholder = {
                     Text(
-                        text = "Digite o nome do treino",
+                        text = "Digite o nome do exercício",
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 },
@@ -100,22 +127,22 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
             )
 
             Text(
-                text = "Descrição *",
+                text = "Observações *",
                 style = MaterialTheme.typography.headlineSmall,
                 fontSize = 20.sp
             )
 
             TextField(
-                value = descricao,
+                value = observacoes,
                 onValueChange = {
-                    descricao = it
+                    observacoes = it
                 },
                 modifier = Modifier
                     .fillMaxWidth(),
 //                        label = {Text(text = "Senha") },
                 placeholder = {
                     Text(
-                        text = "Digite o descrição do treino",
+                        text = "Observações do exercício",
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 },
@@ -134,32 +161,30 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
                     imeAction = ImeAction.Next
                 )
             )
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Adicionar imagem")
+            }
             Spacer(modifier = Modifier.height(30.dp))
             Button(
                 shape = RoundedCornerShape(DpDimensions.Normal),
                 modifier = Modifier
                     .fillMaxWidth(),
                 onClick = {
-                    val currentTimeMillis = System.currentTimeMillis()
-                    val timeStamp = Timestamp(currentTimeMillis)
-
-                    favoriteViewModel.addWorkout(
-                        "43434234",
+                    favoriteViewModel.addExercise(
+                        "",
                         nome,
-                        descricao,
-                        timeStamp.toString(),
+                        "https://conteudo.imguol.com.br/c/entretenimento/0e/2017/10/15/batata-crua-1508077604971_v2_450x450.jpg",
+                        observacoes,
                         userId = userData!!.userId,
-                        userName = userData.username!!
+                        idWorkout = state.workoutId
                     ).let {it ->
 
                         navController.popBackStack()
-
-                        Log.d("SUCESSO?", "AddScreen: SUCESSO!!! ${it.children}")
                     }
                 },
             ) {
 
-                Text(text = "Salvar", style = MaterialTheme.typography.titleMedium)
+                Text(text = "Salvar exercício", style = MaterialTheme.typography.titleMedium)
             }
         }
 
@@ -167,5 +192,3 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
 
 
 }
-
-

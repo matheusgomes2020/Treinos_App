@@ -1,6 +1,7 @@
 package com.matheus.treinosapp.presentation.home
 
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -38,12 +39,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.matheus.treinosapp.R
 import com.matheus.treinosapp.domain.model.Exercise
 import com.matheus.treinosapp.domain.model.Workout
 import com.matheus.treinosapp.domain.repository.Exercises
 import com.matheus.treinosapp.domain.repository.Workouts
+import com.matheus.treinosapp.navigation.AppGraph
 import com.matheus.treinosapp.presentation.MainAppBar
 import com.matheus.treinosapp.presentation.UserData
 import com.matheus.treinosapp.presentation.favorites.Exercises
@@ -159,7 +163,11 @@ fun WorkoutsCell(
             items(workouts) { workout ->
                 WorkoutListItemFirebase(
                     workout = workout,
-                    onItemClick = {},
+                    onItemClick = {
+                        val routes = AppGraph.workouts_details.DETAILS + "/${workout.idFirebase}/${workout.name}/${workout.description}/${workout.timestamp}/${workout.username}"
+                        Log.d("FORA", "WorkoutsCell: $routes")
+                        navController.navigate(routes)
+                    },
                     deleteWorkout = {}
                 )
             }
@@ -184,7 +192,9 @@ fun ExercisesCell(
             items(exercises) { exercise ->
                 ExerciseListItemFirebase(
                     exercise = exercise,
-                    onItemClick = {},
+                    onItemClick = {
+                                  navController.navigate(AppGraph.workouts_details.DETAILS)
+                    },
                     deleteExercise = {}
                 )
             }

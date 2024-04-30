@@ -44,7 +44,7 @@ private val exercisesRef: CollectionReference
     ): AddWorkoutResponse = try {
         val idFirebase = workoutsRef.document().id
         val workout = Workout(
-            id = id,
+            id = idFirebase,
             description = description,
             name = name,
             timestamp = timestamp,
@@ -91,7 +91,7 @@ private val exercisesRef: CollectionReference
     ): AddExerciseResponse = try {
         val idFirebase = exercisesRef.document().id
         val exercise = Exercise(
-            id = id,
+            id = idFirebase,
             name = name,
             imageUrl = imageUrl,
             observations = observations,
