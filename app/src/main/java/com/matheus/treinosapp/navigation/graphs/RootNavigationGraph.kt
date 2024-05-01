@@ -19,9 +19,10 @@ import com.matheus.treinosapp.navigation.SplashGraph
 import com.matheus.treinosapp.presentation.UserData
 import com.matheus.treinosapp.presentation.add.AddScreen
 import com.matheus.treinosapp.presentation.add_exercises.AddExercisesScreen
+import com.matheus.treinosapp.presentation.exercise_detail.ExerciseDetailScreen
 import com.matheus.treinosapp.presentation.home.HomeScreen
 import com.matheus.treinosapp.presentation.main.MainScreen
-import com.matheus.treinosapp.presentation.favorites.FavoritesScreen
+import com.matheus.treinosapp.presentation.profile.ProfileScreen
 import com.matheus.treinosapp.presentation.signIn.AuthViewModel
 import com.matheus.treinosapp.presentation.signIn.LoginScreen
 import com.matheus.treinosapp.presentation.signUp.SignupScreen
@@ -82,7 +83,7 @@ fun HomeNavGraph(navController: NavHostController, userData: UserData?, viewMode
             AddScreen(navController = navController, isSystemInDarkTheme = isSystemInDarkTheme(), userData = userData)
         }
         composable(route = HomeGraph.FAVORITES) {
-            FavoritesScreen(navController = navController, isSystemInDarkTheme = isSystemInDarkTheme(), userData = userData, onSignOut = onSignOut)
+            ProfileScreen(navController = navController, isSystemInDarkTheme = isSystemInDarkTheme(), userData = userData, onSignOut = onSignOut)
         }
         authNavGraph( navController = navController, viewModel = viewModel )
 
@@ -127,6 +128,7 @@ fun NavGraphBuilder.workoutsDetailsNavGraph(navController: NavController, userDa
             }
         }
         addExercisesNavGraph( navController = navController, userData = userData )
+        exercisesDetailsNavGraph( navController = navController)
     }
 
 }
@@ -151,6 +153,40 @@ fun NavGraphBuilder.addExercisesNavGraph(navController: NavController, userData:
             navBackStackEntry.arguments?.getString("workoutId").let {
                 Log.d("XUXU", "workoutsDetailsNavGraph: ${navBackStackEntry.arguments}")
                 AddExercisesScreen(navController = navController, isSystemInDarkTheme = isSystemInDarkTheme(), userData = userData)
+            }
+        }
+    }
+
+}
+
+fun NavGraphBuilder.exercisesDetailsNavGraph(navController: NavController){
+    navigation(
+        route = AppGraph.exercises_details.ROOT,
+        startDestination = AppGraph.exercises_details.DETAILS
+    ) {
+        composable(route = AppGraph.exercises_details.DETAILS + "/{exerciseId}/{exerciseName}/{exerciseObservations}",
+                //"/{exerciseUsername}/{exerciseObservations}/{exerciseImageUrl}",
+
+            arguments = listOf(
+                navArgument( "exerciseId" ) {
+                    type = NavType.StringType
+                },
+                navArgument( "exerciseName" ) {
+                    type = NavType.StringType
+                },
+                navArgument( "exerciseObservations" ) {
+                    type = NavType.StringType
+                }
+//                ,
+//                navArgument( "exerciseImageUrl" ) {
+//                    type = NavType.StringType
+//                }
+            )
+        ) {navBackStackEntry ->
+
+            navBackStackEntry.arguments?.getString("exerciseId").let {
+                Log.d("XUXUA", "workoutsDetailsNavGraph: ${navBackStackEntry.arguments}")
+                ExerciseDetailScreen(navController)
             }
         }
     }

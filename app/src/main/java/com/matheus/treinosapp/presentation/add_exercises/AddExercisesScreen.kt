@@ -1,6 +1,5 @@
 package com.matheus.treinosapp.presentation.add_exercises
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,17 +29,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.matheus.treinosapp.presentation.UserData
-import com.matheus.treinosapp.presentation.favorites.FavoritesViewModel
+import com.matheus.treinosapp.presentation.profile.FirestoreViewModel
 import com.matheus.treinosapp.ui.DpDimensions
-import java.sql.Timestamp
 
 @Composable
 fun AddExercisesScreen(
-    favoriteViewModel: FavoritesViewModel = hiltViewModel(),
+    favoriteViewModel: FirestoreViewModel = hiltViewModel(),
     addExercisesViewModel: AddExercisesViewModel = hiltViewModel(),
-              navController: NavController,
-              isSystemInDarkTheme: Boolean,
-              userData: UserData?
+    navController: NavController,
+    isSystemInDarkTheme: Boolean,
+    userData: UserData?
 ){
 
     val state = addExercisesViewModel.state.value
@@ -173,7 +171,7 @@ fun AddExercisesScreen(
                     favoriteViewModel.addExercise(
                         "",
                         nome,
-                        "https://conteudo.imguol.com.br/c/entretenimento/0e/2017/10/15/batata-crua-1508077604971_v2_450x450.jpg",
+                        "",
                         observacoes,
                         userId = userData!!.userId,
                         idWorkout = state.workoutId

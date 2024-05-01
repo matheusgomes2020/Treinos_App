@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.presentation
+package com.matheus.treinosapp.presentation.utils
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -18,15 +17,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.matheus.treinosapp.R
 import com.matheus.treinosapp.ui.DpDimensions
 import com.matheus.treinosapp.ui.theme.TreinosAppTheme
@@ -34,14 +29,11 @@ import com.matheus.treinosapp.ui.theme.TreinosAppTheme
 @Composable
 fun MainAppBar(
     modifier: Modifier = Modifier,
-    onSearchClick: () -> Unit = {},
-    //onNotificationClick: () -> Unit = {},
+    onIconClick: () -> Unit = {},
     onLogoClick: () -> Unit = {},
-    isProfileScreen: Boolean = false,
     @DrawableRes icon1: Int,
-   // @DrawableRes icon2: Int,
     title: String,
-    imageUrl: String
+    isMainScreen: Boolean
 ) {
 
     Box(
@@ -65,7 +57,7 @@ fun MainAppBar(
 
             Text(
                 text = title,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall,
                 //color = MaterialTheme.colorScheme.inversePrimary,
                 modifier = Modifier
                     .weight(1f)
@@ -74,29 +66,17 @@ fun MainAppBar(
                 maxLines = 1
             )
 
-            if (isProfileScreen) {
-                AsyncImage(
-                    model =
-                   // if (imageUrl != "sem imagem") imageUrl else
-                        R.drawable.weight,
-                    contentDescription = "Profile picture",
-                    modifier = Modifier
-                        .size(35.dp)
-                        .clip(CircleShape)
-                        .clickable {
-                            onSearchClick()
-                        },
-                    contentScale = ContentScale.Crop,
-                )
-            } else {
-                IconButton(onClick = onSearchClick) {
+//            if (!isMainScreen) {
+                IconButton(onClick = onIconClick) {
                     Icon(
+                        tint = if (isMainScreen) {
+                            Color.White
+                        } else {Color.Black},
                         painter = painterResource(id = icon1),
                         contentDescription = null,
                     )
                 }
-            }
-
+            //}
         }
     }
 }
@@ -130,7 +110,7 @@ fun AppBarWithBack(
 
             Text(
                 text = title,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall,
                 //color = MaterialTheme.colorScheme.inversePrimary,
                 modifier = Modifier
                     .weight(1f)

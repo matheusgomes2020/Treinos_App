@@ -2,20 +2,27 @@ package com.matheus.treinosapp.presentation.workout_detail
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.matheus.treinosapp.navigation.AppGraph
-import com.matheus.treinosapp.presentation.AppBarWithBack
-import com.matheus.treinosapp.presentation.favorites.Exercises
 import com.matheus.treinosapp.presentation.home.ExercisesCell
+import com.matheus.treinosapp.presentation.utils.AppBarWithBack
+import com.matheus.treinosapp.presentation.utils.SubtitleHeader
+import com.matheus.treinosapp.ui.DpDimensions
+import com.matheus.treinosapp.ui.theme.OrangeApp
 
 @Composable
 fun WorkoutDetailScreen(
@@ -28,7 +35,7 @@ fun WorkoutDetailScreen(
     Scaffold(
         topBar = {
             AppBarWithBack(
-                title = "Workout",
+                title = state.workout!!.name,
                 backIcon = Icons.AutoMirrored.Filled.ArrowBack,
                 onBackClick = {
                     navController.popBackStack()
@@ -39,36 +46,56 @@ fun WorkoutDetailScreen(
         Column(
             modifier = Modifier.padding(it)
         ) {
-            Text(text = "ID")
-            Text(text = state.workout!!.idFirebase)
+            Column(
+                modifier = Modifier
+                    .padding(vertical = 0.dp, horizontal = DpDimensions.Normal)) {
+//                Text(text = "ID")
+//                Text(text = state.workout!!.idFirebase)
+//
+//                Text(text = "NAME")
+//                Text(text = state.workout!!.name)
 
-            Text(text = "NAME")
-            Text(text = state.workout!!.name)
+                SubtitleHeader(
+                    title = "Descrição",
+                    modifier = Modifier.fillMaxWidth(),
+                    isIconVisible = false,
+                    isSystemInDarkTheme = true,
+                    onClick = {
 
-            Text(text = "DESCRIPTION")
-            Text(text = state.workout!!.description)
+                    }
+                )
+                Text(text = state.workout!!.description)
 
-            Text(text = "TIMESTAMP")
-            Text(text = state.workout!!.timestamp)
+//                Text(text = "TIMESTAMP")
+//                Text(text = state.workout!!.timestamp)
+//
+//                Text(text = "USERNAME")
+//                Text(text = state.workout!!.username)
+            }
 
-            Text(text = "USERNAME")
-            Text(text = state.workout!!.username)
 
 
             WorkoutExercises(workoutId = state.workout!!.idFirebase) {exercises ->
-                Log.d("ACABOU", "Antes???: $exercises")
-//            if (!workouts.isNullOrEmpty()) {
                 ExercisesCell(navController = navController,
                     exercises = exercises) {
-                    Log.d("ACABOU", "WorkoutExercises???: $exercises")
-                    //  }
                 }
             }
+            Spacer(modifier = Modifier.height(DpDimensions.Small))
+            Column(
 
-            Button(onClick = {
-                navController.navigate(AppGraph.add_exercises.ADD + "/${state.workout.idFirebase}/${state.workout.username}")
-            }) {
-                Text(text = "Adicionar exercício")
+                modifier = Modifier
+                    .padding(vertical = 0.dp, horizontal = DpDimensions.Normal)
+            ) {
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        //contentColor = Color.Green,
+                        containerColor = OrangeApp
+                    ),
+                    onClick = {
+                    navController.navigate(AppGraph.add_exercises.ADD + "/${state.workout.idFirebase}/${state.workout.username}")
+                }) {
+                    Text(text = "Adicionar exercício")
+                }
             }
         }
     }

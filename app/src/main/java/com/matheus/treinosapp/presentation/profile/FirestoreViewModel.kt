@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.presentation.favorites
+package com.matheus.treinosapp.presentation.profile
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(
+class FirestoreViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
 

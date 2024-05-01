@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.presentation.favorites
+package com.matheus.treinosapp.presentation.profile
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -12,7 +12,7 @@ import com.matheus.treinosapp.presentation.utils.ProgressBar
 @Composable
 fun Exercises(
     userData: UserData?,
-    viewModel: FavoritesViewModel = hiltViewModel(),
+    viewModel: FirestoreViewModel = hiltViewModel(),
     exercisesContent: @Composable (exercises: Exercises ) -> Unit
 ) {
 
@@ -32,7 +32,7 @@ fun Exercises(
 @Composable
 fun ExercisesUser(
     userData: UserData?,
-    viewModel: FavoritesViewModel = hiltViewModel(),
+    viewModel: FirestoreViewModel = hiltViewModel(),
     exercisesContent: @Composable (exercises: Exercises ) -> Unit
 ) {
 

@@ -6,14 +6,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.matheus.treinosapp.domain.model.Exercise
 import com.matheus.treinosapp.domain.model.Response
 import com.matheus.treinosapp.domain.repository.Exercises
-import com.matheus.treinosapp.presentation.UserData
-import com.matheus.treinosapp.presentation.favorites.FavoritesViewModel
+import com.matheus.treinosapp.presentation.profile.FirestoreViewModel
 import com.matheus.treinosapp.presentation.utils.ProgressBar
 
 @Composable
 fun WorkoutExercises(
     workoutId: String,
-    viewModel: FavoritesViewModel = hiltViewModel(),
+    viewModel: FirestoreViewModel = hiltViewModel(),
     exercisesContent: @Composable (exercises: Exercises ) -> Unit
 ) {
 
@@ -36,7 +35,7 @@ fun WorkoutExercises(
 @Composable
 fun ExercisesUser(
     idWorkout: String,
-    viewModel: FavoritesViewModel = hiltViewModel(),
+    viewModel: FirestoreViewModel = hiltViewModel(),
     exercisesContent: @Composable (exercises: Exercises ) -> Unit
 ) {
 

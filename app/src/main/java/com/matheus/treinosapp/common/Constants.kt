@@ -20,7 +20,7 @@ object Constants {
 
     const val PARAM_EXERCISE_NAME = "exerciseName"
 
-    const val PARAM_EXERCISE_IMAGE_URL = "exerciseDescription"
+    const val PARAM_EXERCISE_IMAGE_URL = "exerciseImageUrl"
 
     const val PARAM_EXERCISE_OBSERVATIONS = "exerciseObservations"
 

@@ -33,10 +33,15 @@ object AddExercisesGraph {
     const val ADD = "add"
 }
 
+object ExercisesDetailsGraph {
+    const val ROOT = "exercises_details_graph"
+    const val DETAILS = "exercise_details"
+}
 object AppGraph {
     val initial = RootGraph
     val auth = AuthGraph
     val workouts_details = WorkoutsDetailsGraph
+    val exercises_details = ExercisesDetailsGraph
     val add_exercises = AddExercisesGraph
     val home = HomeGraph
     val splash = SplashGraph

@@ -34,6 +34,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.matheus.treinosapp.ui.DpDimensions
+import com.matheus.treinosapp.ui.theme.OrangeApp
 import com.matheus.treinosapp.ui.theme.TreinosAppTheme
 
 @Composable
@@ -54,7 +55,7 @@ fun BottomNavBar(
                 //.background(if (isSystemInDarkTheme()) DarkGrey11 else White)
         ) {
             NavigationBar(
-                containerColor = if (isSystemInDarkTheme()) Green else White,
+                containerColor = White,
                 //containerColor = Yellow,
 
                 modifier = Modifier
@@ -75,7 +76,7 @@ fun BottomNavBar(
                         currentDestination?.hierarchy?.any { it.route == screen.route } == true
                     NavigationBarItem(
                         selected = selected,
-                        modifier = Modifier.background(if (isSystemInDarkTheme()) Green else White),
+                        modifier = Modifier.background(White),
                         onClick = {
                             navController.navigate(screen.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
@@ -89,18 +90,18 @@ fun BottomNavBar(
                             Icon(
                                 painter = painterResource(id = screen.icon),
                                 contentDescription = null,
-                                tint = if (selected) Green else Gray
+                                tint = if (selected) OrangeApp else Gray
                             )
                         },
                         label = {
                             Text(
                                 text = stringResource(id = screen.label),
                                 style = MaterialTheme.typography.bodySmall,
-                                color =  if (selected) Green else Gray
+                                color =  if (selected) OrangeApp else Gray
                             )
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            indicatorColor = if (isSystemInDarkTheme()) Gray else White,
+                            indicatorColor = White,
 
                         )
                     )

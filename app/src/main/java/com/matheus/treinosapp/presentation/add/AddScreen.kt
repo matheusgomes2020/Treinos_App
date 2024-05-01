@@ -1,15 +1,22 @@
 package com.matheus.treinosapp.presentation.add
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -29,13 +36,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.matheus.treinosapp.R
 import com.matheus.treinosapp.presentation.UserData
-import com.matheus.treinosapp.presentation.favorites.FavoritesViewModel
+import com.matheus.treinosapp.presentation.profile.FirestoreViewModel
+import com.matheus.treinosapp.presentation.utils.MainAppBar
 import com.matheus.treinosapp.ui.DpDimensions
+import com.matheus.treinosapp.ui.theme.OrangeApp
 import java.sql.Timestamp
 
 @Composable
-fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
+fun AddScreen(favoriteViewModel: FirestoreViewModel = hiltViewModel(),
               navController: NavController,
               isSystemInDarkTheme: Boolean,
               userData: UserData?
@@ -54,118 +64,132 @@ fun AddScreen(favoriteViewModel: FavoritesViewModel = hiltViewModel(),
         )
     }
 
-    Column(
-        modifier = Modifier
-            //.background(Color.Green)
-    ) {
-
+    Scaffold(
+        topBar = {
+            MainAppBar(
+                icon1 = R.drawable.search,
+                title = "Adicionar treino",
+                onLogoClick = {},
+                onIconClick = {},
+                isMainScreen = true
+            )
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .padding(DpDimensions.Normal)
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+
         ) {
-            Text(
-                text = "Nome *",
-                style = MaterialTheme.typography.headlineSmall,
-                fontSize = 20.sp
-            )
-
-            TextField(
-                value = nome,
-                onValueChange = {
-                    nome = it
-                },
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-//                        label = {Text(text = "Senha") },
-                placeholder = {
-                    Text(
-                        text = "Digite o nome do treino",
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Magenta,
-                    focusedIndicatorColor = Color.Gray,
-                    unfocusedIndicatorColor = Color.Gray,
-                    disabledIndicatorColor = Color.Red,
-                    cursorColor = MaterialTheme.colorScheme.onPrimary
-                ),                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.None,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
+                    .padding(vertical = 0.dp, horizontal = DpDimensions.Normal)) {
+                Text(
+                    text = "Nome *",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontSize = 20.sp
                 )
-            )
 
-            Text(
-                text = "Descrição *",
-                style = MaterialTheme.typography.headlineSmall,
-                fontSize = 20.sp
-            )
-
-            TextField(
-                value = descricao,
-                onValueChange = {
-                    descricao = it
-                },
-                modifier = Modifier
-                    .fillMaxWidth(),
+                TextField(
+                    value = nome,
+                    onValueChange = {
+                        nome = it
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(),
 //                        label = {Text(text = "Senha") },
-                placeholder = {
-                    Text(
-                        text = "Digite o descrição do treino",
-                        style = MaterialTheme.typography.bodyMedium,
+                    placeholder = {
+                        Text(
+                            text = "Digite o nome do treino",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Magenta,
+                        focusedIndicatorColor = Color.Gray,
+                        unfocusedIndicatorColor = Color.Gray,
+                        disabledIndicatorColor = Color.Red,
+                        cursorColor = MaterialTheme.colorScheme.onPrimary
+                    ),                keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.None,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
                     )
-                },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Magenta,
-                    focusedIndicatorColor = Color.Gray,
-                    unfocusedIndicatorColor = Color.Gray,
-                    disabledIndicatorColor = Color.Red,
-                    cursorColor = MaterialTheme.colorScheme.onPrimary
-                ),                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.None,
-                    autoCorrect = false,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next
                 )
-            )
-            Spacer(modifier = Modifier.height(30.dp))
-            Button(
-                shape = RoundedCornerShape(DpDimensions.Normal),
-                modifier = Modifier
-                    .fillMaxWidth(),
-                onClick = {
-                    val currentTimeMillis = System.currentTimeMillis()
-                    val timeStamp = Timestamp(currentTimeMillis)
 
-                    favoriteViewModel.addWorkout(
-                        "43434234",
-                        nome,
-                        descricao,
-                        timeStamp.toString(),
-                        userId = userData!!.userId,
-                        userName = userData.username!!
-                    ).let {it ->
+                Text(
+                    text = "Descrição *",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontSize = 20.sp
+                )
 
-                        navController.popBackStack()
+                TextField(
+                    value = descricao,
+                    onValueChange = {
+                        descricao = it
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(),
+//                        label = {Text(text = "Senha") },
+                    placeholder = {
+                        Text(
+                            text = "Digite o descrição do treino",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Magenta,
+                        focusedIndicatorColor = Color.Gray,
+                        unfocusedIndicatorColor = Color.Gray,
+                        disabledIndicatorColor = Color.Red,
+                        cursorColor = MaterialTheme.colorScheme.onPrimary
+                    ),                keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.None,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    )
+                )
+                Spacer(modifier = Modifier.height(30.dp))
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        //contentColor = Color.Green,
+                        containerColor = OrangeApp
+                    ),
+                    shape = RoundedCornerShape(DpDimensions.Normal),
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = {
+                        val currentTimeMillis = System.currentTimeMillis()
+                        val timeStamp = Timestamp(currentTimeMillis)
 
-                        Log.d("SUCESSO?", "AddScreen: SUCESSO!!! ${it.children}")
-                    }
-                },
-            ) {
+                        favoriteViewModel.addWorkout(
+                            "",
+                            nome,
+                            descricao,
+                            timeStamp.toString(),
+                            userId = userData!!.userId,
+                            userName = userData.username!!
+                        ).let {it ->
 
-                Text(text = "Salvar", style = MaterialTheme.typography.titleMedium)
+                            navController.popBackStack()
+
+                            Log.d("SUCESSO?", "AddScreen: SUCESSO!!! ${it.children}")
+                        }
+                    },
+                ) {
+
+                    Text(text = "Salvar", style = MaterialTheme.typography.titleMedium)
+                }
             }
         }
-
     }
-
-
 }
 
 

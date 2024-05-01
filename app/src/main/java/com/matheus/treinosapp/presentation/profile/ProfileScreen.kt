@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.presentation.favorites
+package com.matheus.treinosapp.presentation.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,15 +17,14 @@ import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.matheus.treinosapp.R
 import com.matheus.treinosapp.navigation.AppGraph
-import com.matheus.treinosapp.presentation.MainAppBar
 import com.matheus.treinosapp.presentation.UserData
-import com.matheus.treinosapp.presentation.home.ExercisesCell
 import com.matheus.treinosapp.presentation.home.WorkoutsCell
+import com.matheus.treinosapp.presentation.utils.MainAppBar
 import java.sql.Timestamp
 
 @Composable
-fun FavoritesScreen(
-    favoriteViewModel: FavoritesViewModel = hiltViewModel(),
+fun ProfileScreen(
+    favoriteViewModel: FirestoreViewModel = hiltViewModel(),
     navController: NavController,
     isSystemInDarkTheme: Boolean,
     userData: UserData?,
@@ -46,14 +45,15 @@ fun FavoritesScreen(
         topBar = {
             MainAppBar(
                 icon1 = R.drawable.logout,
-                title = "Treinos",
-                imageUrl = "",
+                title = "Perfil",
                 onLogoClick = {},
-                onSearchClick = {
+                onIconClick = {
                     onSignOut().let {
                         navController.navigate(AppGraph.auth.LOGIN)
                     }
-                })
+                },
+                isMainScreen = false
+            )
         }
     ) { paddingValues ->
         Column(
@@ -63,52 +63,15 @@ fun FavoritesScreen(
                 .fillMaxSize()
 
         ) {
-            Button(onClick = {
-                val currentTimeMillis = System.currentTimeMillis()
-                val timeStamp = Timestamp(currentTimeMillis)
-                favoriteViewModel.addWorkout(
-                    "43434234",
-                    "3",
-                    "Treino de costas",
-                    timeStamp.toString(),
-                    userId = userData!!.userId,
-                    userName = userData.username!!
-                )
-            }) {
-                Text(text = "Adicionar")
-            }
-
-            Button(onClick = {
-                favoriteViewModel.addExercise(
-                    id = "0012345678910",
-                    name = "7",
-                    imageUrl = "",
-                    observations = "7 repetições de 15",
-                    userId = userData!!.userId,
-                    idWorkout = "para depois"
-
-                )
-            }) {
-                Text(text = "Adicionar exercício")
-            }
-
 
             WorkoutsUser(userData = userData) {workouts ->
-//            if (!workouts.isNullOrEmpty()) {
+            if (workouts.isNotEmpty()) {
                 WorkoutsCell(navController = navController,
-                    workouts = workouts) {
-
-                    //  }
+                    workouts = workouts, "Meus treinos") {
                 }
+            } else {
+                Text(text = "Você não tem treinos salvos!!")
             }
-
-            Exercises(userData = userData) {exercises ->
-//            if (!workouts.isNullOrEmpty()) {
-                ExercisesCell(navController = navController,
-                    exercises = exercises) {
-
-                    //  }
-                }
             }
         }
     }
