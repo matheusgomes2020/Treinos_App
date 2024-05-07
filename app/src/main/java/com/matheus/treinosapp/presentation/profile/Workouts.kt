@@ -20,7 +20,7 @@ fun Workouts(
     when(val workoutsResponse = viewModel.workoutsResponse) {
         is Response.Loading -> ProgressBar()
         is Response.Success -> workoutsResponse.data.let { workouts ->
-            listOfWorkouts = workouts
+            listOfWorkouts = workouts!!
             workoutsContent(listOfWorkouts)
             Log.d("FFFFIRRE", "FOI???: $listOfWorkouts")
         }
@@ -40,7 +40,7 @@ fun WorkoutsUser(
     when(val workoutsResponse = viewModel.workoutsResponse) {
         is Response.Loading -> ProgressBar()
         is Response.Success -> workoutsResponse.data.let { workouts ->
-            listOfWorkouts = workouts
+            listOfWorkouts = workouts!!
             listOfWorkouts = workouts.filter { workout ->
                 workout.userId == userData?.userId
             }
