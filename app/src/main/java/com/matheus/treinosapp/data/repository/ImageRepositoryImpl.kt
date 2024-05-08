@@ -16,6 +16,7 @@ import com.matheus.treinosapp.domain.repository.AddImageUrlToFirestoreResponse
 import com.matheus.treinosapp.domain.repository.GetImageToFirestoreResponse
 import com.matheus.treinosapp.domain.repository.ImageRepository
 import kotlinx.coroutines.tasks.await
+import java.sql.Timestamp
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -26,7 +27,9 @@ class ImageRepositoryImpl @Inject constructor(
 ): ImageRepository {
     override suspend fun addImageToFirebaseStorage(imageUri: Uri, exerciseId: String): AddImageToStorageResponse {
         return try {
-            val downloadUrl = storage.reference.child(IMAGES).child(exerciseId)
+            val currentTimeMillis = System.currentTimeMillis()
+            val timeStamp = Timestamp(currentTimeMillis)
+            val downloadUrl = storage.reference.child(IMAGES).child(timeStamp.toString())
                 .putFile(imageUri).await()
                 .storage.downloadUrl.await()
             Response.Success(downloadUrl)

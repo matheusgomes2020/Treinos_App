@@ -30,8 +30,9 @@ fun ExerciseDetailScreen(
     viewModel: ExerciseDetailViewModel = hiltViewModel()
     ) {
 
-        val state = viewModel.state.value
-    Log.d("XUXUA", "detail screen: ${state}")
+    val state = viewModel.state.value
+
+    val imageUrl
 
         Scaffold(
             topBar = {
@@ -52,7 +53,7 @@ fun ExerciseDetailScreen(
                         .padding(vertical = 0.dp, horizontal = DpDimensions.Normal)) {
                     Image(
                         painter = rememberAsyncImagePainter(
-                            model = R.drawable.weight
+                            model = if (state.exercise?.imageUrl?.isEmpty() == true) R.drawable.weight else state.exercise?.imageUrl?
                         ),
                         contentScale = ContentScale.Crop,
                         contentDescription = "poster image",

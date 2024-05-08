@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -186,6 +187,7 @@ fun AddExercisesScreen(
                         imeAction = ImeAction.Next
                     )
                 )
+                Spacer(modifier = Modifier.height(DpDimensions.Normal))
                 Button(onClick = {
                     launcher.launch(
                         ALL_IMAGES
@@ -193,19 +195,15 @@ fun AddExercisesScreen(
                 }) {
                     Text(text = "Adicionar imagem")
                 }
+                Spacer(modifier = Modifier.height(DpDimensions.Small))
                 Image(painter = painter,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .clip(CircleShape)
-                        .size(250.dp),
+                        .size(40.dp),
                 )
                 Spacer(modifier = Modifier.height(30.dp))
-                AbrirGaleria(
-                    openGallery = {
-                        launcher.launch(ALL_IMAGES)
-                    }
-                )
                 when (val addImageToStorageResponse = imageViewModel.addImageUrlToStorageResponse) {
                     is Response.Loading -> ProgressBar()
                     is Response.Success -> addImageToStorageResponse.data?.let { downloadUrl ->
@@ -215,24 +213,6 @@ fun AddExercisesScreen(
                     }
                     is Response.Failure -> print(addImageToStorageResponse.e)
                 }
-//                AddImageToStorage(
-//                    addImageToDatabase =  { downloadUrl ->
-//                        imageViewModel.addImageToDatabase(downloadUrl)
-//                    }
-//                ).let { it ->
-//                    Log.d("COMPLETOU?", "AddExercisesScreen:   | $it ")
-//                }
-//                when (val getFromDatabaseResponse = imageViewModel.getImageFromDatabaseResponse) {
-//                    is Response.Loading -> ProgressBar()
-//                    is Response.Success -> getFromDatabaseResponse.data?.let { imageUrl ->
-//                        imageUrlP = imageUrl
-//                        Log.d("COMPLETOU?", "AddExercisesScreen: $imageUrl   | $imageUrlP ")
-//                    }
-//                    is Response.Failure -> print(getFromDatabaseResponse.e)
-//                }
-
-                Log.d("COMPLETOU?", "DEpois do método:   | $imageUrlP ")
-
                 Button(
                     shape = RoundedCornerShape(DpDimensions.Normal),
                     modifier = Modifier

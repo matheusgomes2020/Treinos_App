@@ -90,7 +90,7 @@ fun HomeScreen(favoriteViewModel: FirestoreViewModel = hiltViewModel(),
             Workouts(userData = userData) {workouts ->
             if (workouts.isNotEmpty()) {
                 WorkoutsCell(navController = navController,
-                    workouts = workouts, "Treinos de outros usuários") {}
+                    workouts = workouts, "Treinos de outros usuários", false){}
                 }
             }
         }
@@ -103,8 +103,11 @@ fun WorkoutsCell(
     navController: NavController,
     workouts: Workouts,
     text: String,
-    deleteWorkout: (idFirebase: String) -> Unit
+    isProfileScreen: Boolean,
+    deleteWorkout: (idFirebase: String) -> Unit,
 ){
+
+    var isProfile = if (isProfileScreen) "true" else "false"
 
     Column(
         modifier = Modifier
@@ -128,7 +131,7 @@ fun WorkoutsCell(
                 WorkoutListItem(
                     workout = workout,
                     onItemClick = {
-                        val routes = AppGraph.workouts_details.DETAILS + "/${workout.idFirebase}/${workout.name}/${workout.description}/${workout.timestamp}/${workout.username}/${"false"}"
+                        val routes = AppGraph.workouts_details.DETAILS + "/${workout.idFirebase}/${workout.name}/${workout.description}/${workout.timestamp}/${workout.username}/${isProfile}"
                         Log.d("FORA", "WorkoutsCell: $routes")
                         navController.navigate(routes)
                     },
@@ -353,7 +356,9 @@ fun ExerciseListItemFirebase2(
             modifier = Modifier
                 .fillMaxSize()
                 .paint(
-                    painter = rememberAsyncImagePainter(model = R.drawable.weight),
+                    painter = rememberAsyncImagePainter(
+                        model = if (exercise.imageUrl.isNullOrEmpty())
+                            R.drawable.weight else exercise.imageUrl) ,
                     contentScale = ContentScale.Crop
                 )
                 .background(

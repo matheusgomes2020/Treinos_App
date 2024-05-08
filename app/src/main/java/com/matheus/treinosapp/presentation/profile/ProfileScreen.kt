@@ -67,7 +67,7 @@ fun ProfileScreen(
             WorkoutsUser(userData = userData) {workouts ->
             if (workouts.isNotEmpty()) {
                 WorkoutsCell(navController = navController,
-                    workouts = workouts, "Meus treinos") {
+                    workouts = workouts, "Meus treinos", true) {
                 }
             } else {
                 Text(text = "Você não tem treinos salvos!!")
