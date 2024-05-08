@@ -40,7 +40,8 @@ import com.matheus.treinosapp.ui.theme.OrangeApp
 @Composable
 fun WorkoutDetailScreen(
     navController: NavController,
-    viewModel: WorkoutDetailViewModel = hiltViewModel()
+    viewModel: WorkoutDetailViewModel = hiltViewModel(),
+    isUserWorkout: Boolean
 ) {
 
     val state = viewModel.state.value
@@ -60,16 +61,9 @@ fun WorkoutDetailScreen(
             modifier = Modifier.padding(it)
         ) {
 
-
-
             Column(
                 modifier = Modifier
                     .padding(vertical = 0.dp, horizontal = DpDimensions.Normal)) {
-//                Text(text = "ID")
-//                Text(text = state.workout!!.idFirebase)
-//
-//                Text(text = "NAME")
-//                Text(text = state.workout!!.name)
 
                 SubtitleHeader(
                     title = "Descrição",
@@ -81,14 +75,7 @@ fun WorkoutDetailScreen(
                     }
                 )
                 Text(text = state.workout!!.description)
-
-//                Text(text = "TIMESTAMP")
-//                Text(text = state.workout!!.timestamp)
-//
-//                Text(text = "USERNAME")
-//                Text(text = state.workout!!.usernam
             }
-
 
 
             WorkoutExercises(workoutId = state.workout!!.idFirebase) {exercises ->
@@ -102,16 +89,17 @@ fun WorkoutDetailScreen(
                 modifier = Modifier
                     .padding(vertical = 0.dp, horizontal = DpDimensions.Normal)
             ) {
-                Button(
-                    colors = ButtonDefaults.buttonColors(
-                        //contentColor = Color.Green,
-                        containerColor = OrangeApp
-                    ),
-                    onClick = {
-                    navController.navigate(AppGraph.add_exercises.ADD + "/${state.workout.idFirebase}/${state.workout.username}")
-                }) {
-                    Text(text = "Adicionar exercício")
-                }
+                if (isUserWorkout)
+                    Button(
+                        colors = ButtonDefaults.buttonColors(
+                            //contentColor = Color.Green,
+                            containerColor = OrangeApp
+                        ),
+                        onClick = {
+                            navController.navigate(AppGraph.add_exercises.ADD + "/${state.workout.idFirebase}/${state.workout.username}")
+                        }) {
+                        Text(text = "Adicionar exercício")
+                    }
             }
         }
     }

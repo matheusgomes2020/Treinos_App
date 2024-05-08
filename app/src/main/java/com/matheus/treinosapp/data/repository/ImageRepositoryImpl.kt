@@ -1,6 +1,7 @@
 package com.matheus.treinosapp.data.repository
 
 import android.net.Uri
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -16,14 +17,16 @@ import com.matheus.treinosapp.domain.repository.GetImageToFirestoreResponse
 import com.matheus.treinosapp.domain.repository.ImageRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Named
 
 class ImageRepositoryImpl @Inject constructor(
     private val storage: FirebaseStorage,
-    private val db: FirebaseFirestore
+    @Named("images")
+    private val imagesRef: CollectionReference,
 ): ImageRepository {
-    override suspend fun addImageToFirebaseStorage(imageUri: Uri): AddImageToStorageResponse {
+    override suspend fun addImageToFirebaseStorage(imageUri: Uri, exerciseId: String): AddImageToStorageResponse {
         return try {
-            val downloadUrl = storage.reference.child(IMAGES).child(IMAGE_NAME)
+            val downloadUrl = storage.reference.child(IMAGES).child(exerciseId)
                 .putFile(imageUri).await()
                 .storage.downloadUrl.await()
             Response.Success(downloadUrl)
@@ -34,8 +37,8 @@ class ImageRepositoryImpl @Inject constructor(
 
     override suspend fun addImageUrlToFirestore(download: Uri): AddImageUrlToFirestoreResponse {
         return try {
-            db.collection(IMAGES).document(UID).set(mapOf(
-                URL to URL,
+            imagesRef.document().set(mapOf(
+                URL to download,
                 CREATED_AT to FieldValue.serverTimestamp()
             )).await()
             Response.Success(true)
@@ -46,7 +49,7 @@ class ImageRepositoryImpl @Inject constructor(
 
     override suspend fun getImageUrlFromFirestore(): GetImageToFirestoreResponse {
         return try {
-            val imageUrl = db.collection(IMAGES).document(UID).get().await().getString(URL)
+            val imageUrl = imagesRef.document(UID).get().await().getString(URL)
             Response.Success(imageUrl)
         } catch (e:Exception) {
             Response.Failure(e)

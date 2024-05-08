@@ -98,7 +98,7 @@ fun NavGraphBuilder.workoutsDetailsNavGraph(navController: NavController, userDa
         route = AppGraph.workouts_details.ROOT,
         startDestination = AppGraph.workouts_details.DETAILS
     ) {
-        composable(route = AppGraph.workouts_details.DETAILS + "/{workoutId}/{name}/{description}/{timestamp}/{username}",
+        composable(route = AppGraph.workouts_details.DETAILS + "/{workoutId}/{name}/{description}/{timestamp}/{username}/{isWorkoutUser}",
 
             arguments = listOf(
                 navArgument( "workoutId" ) {
@@ -119,12 +119,20 @@ fun NavGraphBuilder.workoutsDetailsNavGraph(navController: NavController, userDa
                 navArgument( "username" ) {
                     type = NavType.StringType
                 }
+                ,
+                navArgument( "isWorkoutUser" ) {
+                    type = NavType.StringType
+                }
             )
         ) {navBackStackEntry ->
 
-            navBackStackEntry.arguments?.getString("workoutId").let {
+            navBackStackEntry.arguments?.getString("isWorkoutUser").let { isW ->
+                if (isW == "true")
+                    WorkoutDetailScreen(navController = navController, isUserWorkout = true)
+                else
+                    WorkoutDetailScreen(navController = navController, isUserWorkout = false)
                 Log.d("XUXU", "workoutsDetailsNavGraph: ${navBackStackEntry.destination}")
-               WorkoutDetailScreen(navController)
+
             }
         }
         addExercisesNavGraph( navController = navController, userData = userData )

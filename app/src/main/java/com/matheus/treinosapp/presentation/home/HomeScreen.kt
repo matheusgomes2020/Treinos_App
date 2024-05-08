@@ -128,7 +128,7 @@ fun WorkoutsCell(
                 WorkoutListItem(
                     workout = workout,
                     onItemClick = {
-                        val routes = AppGraph.workouts_details.DETAILS + "/${workout.idFirebase}/${workout.name}/${workout.description}/${workout.timestamp}/${workout.username}"
+                        val routes = AppGraph.workouts_details.DETAILS + "/${workout.idFirebase}/${workout.name}/${workout.description}/${workout.timestamp}/${workout.username}/${"false"}"
                         Log.d("FORA", "WorkoutsCell: $routes")
                         navController.navigate(routes)
                     },

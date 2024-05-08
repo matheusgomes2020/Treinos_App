@@ -9,9 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.matheus.treinosapp.domain.model.Response
 import com.matheus.treinosapp.domain.model.Response.Success
 import com.matheus.treinosapp.domain.repository.ImageRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ImageViewModel @Inject constructor(
     private val repo: ImageRepository
 ) : ViewModel(){
@@ -24,9 +26,9 @@ class ImageViewModel @Inject constructor(
     var getImageFromDatabaseResponse by mutableStateOf<Response<String>>(Success(null))
         private set
 
-    fun addImageToStorage(imageUri: Uri) = viewModelScope.launch {
+    fun addImageToStorage(imageUri: Uri, exerciseId: String) = viewModelScope.launch {
         addImageUrlToStorageResponse = Response.Loading
-        addImageUrlToStorageResponse = repo.addImageToFirebaseStorage(imageUri)
+        addImageUrlToStorageResponse = repo.addImageToFirebaseStorage(imageUri, exerciseId)
     }
 
     fun addImageToDatabase(downloadUrl: Uri) = viewModelScope.launch {
