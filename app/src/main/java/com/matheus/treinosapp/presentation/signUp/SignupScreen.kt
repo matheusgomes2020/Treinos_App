@@ -51,7 +51,7 @@ import androidx.navigation.compose.rememberNavController
 import com.matheus.treinosapp.R
 import com.matheus.treinosapp.navigation.AppGraph
 import com.matheus.treinosapp.presentation.signIn.AuthViewModel
-import com.matheus.treinosapp.common.Resource
+import com.matheus.treinosapp.utils.Resource
 import com.matheus.treinosapp.ui.DpDimensions
 import com.matheus.treinosapp.ui.theme.BlueGrey11
 import com.matheus.treinosapp.ui.theme.TreinosAppTheme

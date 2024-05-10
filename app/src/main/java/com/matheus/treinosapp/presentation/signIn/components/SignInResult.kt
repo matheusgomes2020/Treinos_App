@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.presentation
+package com.matheus.treinosapp.presentation.signIn.components
 
 data class SignInResult(
     val data: UserData?,

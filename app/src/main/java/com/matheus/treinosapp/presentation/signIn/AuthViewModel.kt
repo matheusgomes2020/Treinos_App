@@ -3,7 +3,7 @@ package com.matheus.treinosapp.presentation.signIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.matheus.treinosapp.common.Resource
+import com.matheus.treinosapp.utils.Resource
 import com.matheus.treinosapp.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

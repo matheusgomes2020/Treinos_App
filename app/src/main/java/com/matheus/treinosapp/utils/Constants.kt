@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.common
+package com.matheus.treinosapp.utils
 
 object Constants {
 

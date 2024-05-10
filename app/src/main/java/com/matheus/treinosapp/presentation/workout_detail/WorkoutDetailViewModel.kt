@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.matheus.treinosapp.common.Constants
+import com.matheus.treinosapp.utils.Constants
 import com.matheus.treinosapp.domain.model.Workout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

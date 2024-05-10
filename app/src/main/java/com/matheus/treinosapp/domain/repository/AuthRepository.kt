@@ -1,7 +1,7 @@
 package com.matheus.treinosapp.domain.repository
 
 import com.google.firebase.auth.FirebaseUser
-import com.matheus.treinosapp.common.Resource
+import com.matheus.treinosapp.utils.Resource
 
 interface AuthRepository {
     val currentUser: FirebaseUser?

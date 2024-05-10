@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.matheus.treinosapp.R
-import com.matheus.treinosapp.common.Resource
+import com.matheus.treinosapp.utils.Resource
 import com.matheus.treinosapp.navigation.AppGraph
 import com.matheus.treinosapp.ui.DpDimensions
 import com.matheus.treinosapp.ui.theme.BlueGrey11

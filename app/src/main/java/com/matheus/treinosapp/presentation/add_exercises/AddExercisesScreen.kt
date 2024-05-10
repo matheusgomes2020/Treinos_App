@@ -1,8 +1,6 @@
 package com.matheus.treinosapp.presentation.add_exercises
 
 import android.annotation.SuppressLint
-import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -46,15 +43,13 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.matheus.treinosapp.R
-import com.matheus.treinosapp.common.Constants.ALL_IMAGES
+import com.matheus.treinosapp.utils.Constants.ALL_IMAGES
 import com.matheus.treinosapp.domain.model.Response
-import com.matheus.treinosapp.presentation.UserData
-import com.matheus.treinosapp.presentation.image.AbrirGaleria
-import com.matheus.treinosapp.presentation.image.AddImageToStorage
+import com.matheus.treinosapp.presentation.signIn.components.UserData
 import com.matheus.treinosapp.presentation.image.ImageViewModel
 import com.matheus.treinosapp.presentation.profile.FirestoreViewModel
-import com.matheus.treinosapp.presentation.utils.AppBarWithBack
-import com.matheus.treinosapp.presentation.utils.ProgressBar
+import com.matheus.treinosapp.presentation.common.AppBarWithBack
+import com.matheus.treinosapp.presentation.common.ProgressBar
 import com.matheus.treinosapp.ui.DpDimensions
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -238,8 +233,4 @@ fun AddExercisesScreen(
 
         }
     }
-
-
-
-
 }

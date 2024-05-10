@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,10 +16,10 @@ import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.matheus.treinosapp.R
 import com.matheus.treinosapp.navigation.AppGraph
-import com.matheus.treinosapp.presentation.UserData
-import com.matheus.treinosapp.presentation.home.WorkoutsCell
-import com.matheus.treinosapp.presentation.utils.MainAppBar
-import java.sql.Timestamp
+import com.matheus.treinosapp.presentation.signIn.components.UserData
+import com.matheus.treinosapp.presentation.common.MainAppBar
+import com.matheus.treinosapp.presentation.home.components.WorkoutsCell
+import com.matheus.treinosapp.presentation.profile.components.WorkoutsUser
 
 @Composable
 fun ProfileScreen(

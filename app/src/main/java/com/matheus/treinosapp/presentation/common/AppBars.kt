@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.presentation.utils
+package com.matheus.treinosapp.presentation.common
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

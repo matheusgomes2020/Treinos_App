@@ -4,11 +4,10 @@ import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.matheus.treinosapp.domain.model.Response
 import com.matheus.treinosapp.domain.model.Response.Loading
 import com.matheus.treinosapp.domain.model.Response.Success
 import com.matheus.treinosapp.domain.model.Response.Failure
-import com.matheus.treinosapp.presentation.utils.ProgressBar
+import com.matheus.treinosapp.presentation.common.ProgressBar
 
 @Composable
 fun AddImageToStorage (

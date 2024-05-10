@@ -1,5 +1,6 @@
 package com.matheus.treinosapp.presentation.exercise_detail
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -20,10 +21,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.matheus.treinosapp.R
-import com.matheus.treinosapp.presentation.utils.AppBarWithBack
-import com.matheus.treinosapp.presentation.utils.SubtitleHeader
+import com.matheus.treinosapp.presentation.common.AppBarWithBack
+import com.matheus.treinosapp.presentation.common.SubtitleHeader
 import com.matheus.treinosapp.ui.DpDimensions
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ExerciseDetailScreen(
     navController: NavController,
@@ -32,7 +34,7 @@ fun ExerciseDetailScreen(
 
     val state = viewModel.state.value
 
-    val imageUrl
+    val imageUrl = state.exercise!!.imageUrl
 
         Scaffold(
             topBar = {
@@ -53,7 +55,7 @@ fun ExerciseDetailScreen(
                         .padding(vertical = 0.dp, horizontal = DpDimensions.Normal)) {
                     Image(
                         painter = rememberAsyncImagePainter(
-                            model = if (state.exercise?.imageUrl?.isEmpty() == true) R.drawable.weight else state.exercise?.imageUrl?
+                            model = if (imageUrl.isNullOrEmpty()) R.drawable.weight else imageUrl
                         ),
                         contentScale = ContentScale.Crop,
                         contentDescription = "poster image",

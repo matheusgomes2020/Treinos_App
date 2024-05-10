@@ -1,7 +1,5 @@
 package com.matheus.treinosapp.presentation.add
 
-import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -37,9 +34,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.matheus.treinosapp.R
-import com.matheus.treinosapp.presentation.UserData
+import com.matheus.treinosapp.presentation.signIn.components.UserData
 import com.matheus.treinosapp.presentation.profile.FirestoreViewModel
-import com.matheus.treinosapp.presentation.utils.MainAppBar
+import com.matheus.treinosapp.presentation.common.MainAppBar
 import com.matheus.treinosapp.ui.DpDimensions
 import com.matheus.treinosapp.ui.theme.OrangeApp
 import java.sql.Timestamp
@@ -179,8 +176,6 @@ fun AddScreen(favoriteViewModel: FirestoreViewModel = hiltViewModel(),
                         ).let {it ->
 
                             navController.popBackStack()
-
-                            Log.d("SUCESSO?", "AddScreen: SUCESSO!!! ${it.children}")
                         }
                     },
                 ) {

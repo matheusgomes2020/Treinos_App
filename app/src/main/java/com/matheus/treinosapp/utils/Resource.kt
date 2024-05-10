@@ -1,4 +1,4 @@
-package com.matheus.treinosapp.common
+package com.matheus.treinosapp.utils
 
 sealed class Resource<out R> {
     data class Success<out R>(val result: R) : Resource<R>()

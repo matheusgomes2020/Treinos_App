@@ -1,15 +1,13 @@
 package com.matheus.treinosapp.presentation.add_exercises
 
 import android.util.Log
-import com.matheus.treinosapp.presentation.workout_detail.WorkoutDetailState
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.matheus.treinosapp.common.Constants
+import com.matheus.treinosapp.utils.Constants
 import com.matheus.treinosapp.domain.model.Exercise
-import com.matheus.treinosapp.domain.model.Workout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,10 +22,7 @@ class AddExercisesViewModel @Inject constructor(
     init {
         savedStateHandle.get<String>(Constants.PARAM_WORKOUT_ID)?.let { id -> exercise.idWorkout = id }
         savedStateHandle.get<String>(Constants.PARAM_WORKOUT_USERNAME)?.let { userName -> exercise.userId = userName }
-//        savedStateHandle.get<String>(Constants.PARAM_EXERCISE_ID)?.let { id -> exercise.idFirebase = id }
-//        savedStateHandle.get<String>(Constants.PARAM_EXERCISE_NAME)?.let { name -> exercise.name = name }
-//        savedStateHandle.get<String>(Constants.PARAM_EXERCISE_IMAGE_URL)?.let { description -> exercise.imageUrl = description }
-//        savedStateHandle.get<String>(Constants.PARAM_EXERCISE_OBSERVATIONS)?.let { timestamp -> exercise.observations = timestamp }
+//      savedStateHandle.get<String>(Constants.PARAM_EXERCISE_IMAGE_URL)?.let { description -> exercise.imageUrl = description }
 
         getParams(exercise.idWorkout, exercise.userId)
 
@@ -35,6 +30,5 @@ class AddExercisesViewModel @Inject constructor(
 
     private fun getParams( idWorkout: String, userName: String ) {
         _state.value = AddExerciseState(idWorkout, userName)
-        Log.d("XUXU", "getExercise: ${_state.value}")
     }
 }

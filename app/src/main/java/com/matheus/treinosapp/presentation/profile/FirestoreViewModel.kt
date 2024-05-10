@@ -45,7 +45,6 @@ class FirestoreViewModel @Inject constructor(
     private fun getWorkouts() = viewModelScope.launch {
         useCases.getWorkouts().collect { response ->
             workoutsResponse = response
-            Log.d("FFFFIRRE", "getmovies: " + response)
         }
     }
 
@@ -56,11 +55,8 @@ class FirestoreViewModel @Inject constructor(
                  userId: String,
                  userName: String
     ) = viewModelScope.launch {
-        Log.d("FFFFIRRE", "Add:  $id, $name, $timestamp, $userId")
         addWorkoutResponse = Response.Loading
         addWorkoutResponse = useCases.addWorkout(id, name, description, timestamp, userId, userName)
-        Log.d("FFFFIRRE", "Add: " + addWorkoutResponse.toString())
-
     }
 
     fun deleteWorkout(idFirebase: String) = viewModelScope.launch {
@@ -71,7 +67,6 @@ class FirestoreViewModel @Inject constructor(
     private fun getExercises() = viewModelScope.launch {
         useCases.getExercises().collect { response ->
             exercisesResponse = response
-            Log.d("FFFFIRRE", "getmovies: " + response)
         }
     }
 
@@ -82,11 +77,8 @@ class FirestoreViewModel @Inject constructor(
                     userId: String,
                     idWorkout: String
     ) = viewModelScope.launch {
-        Log.d("FFFFIRRE", "Add:  $id, $name, $imageUrl, $userId")
         addExerciseResponse = Response.Loading
         addExerciseResponse = useCases.addExercise(id, name, imageUrl, observations, userId, idWorkout)
-        Log.d("FFFFIRRE", "Add: " + addExerciseResponse.toString())
-
     }
 
     fun deleteExercise(idFirebase: String) = viewModelScope.launch {

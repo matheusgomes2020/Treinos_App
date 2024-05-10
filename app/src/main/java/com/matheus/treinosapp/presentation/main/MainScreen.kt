@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.matheus.treinosapp.navigation.graphs.HomeNavGraph
-import com.matheus.treinosapp.presentation.UserData
+import com.matheus.treinosapp.presentation.signIn.components.UserData
 import com.matheus.treinosapp.presentation.main.components.BottomNavBar
 import com.matheus.treinosapp.presentation.main.components.Screen
 import com.matheus.treinosapp.presentation.signIn.AuthViewModel
@@ -48,11 +48,6 @@ fun MainScreen(
             )
         }
     }
-
-
-
-
-
 
     bottomBarVisible = when (navBackStackEntry?.destination?.route) {
         Screen.Home.route -> true

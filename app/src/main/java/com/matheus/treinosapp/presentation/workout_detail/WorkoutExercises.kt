@@ -7,7 +7,7 @@ import com.matheus.treinosapp.domain.model.Exercise
 import com.matheus.treinosapp.domain.model.Response
 import com.matheus.treinosapp.domain.repository.Exercises
 import com.matheus.treinosapp.presentation.profile.FirestoreViewModel
-import com.matheus.treinosapp.presentation.utils.ProgressBar
+import com.matheus.treinosapp.presentation.common.ProgressBar
 
 @Composable
 fun WorkoutExercises(
@@ -25,7 +25,6 @@ fun WorkoutExercises(
                 exercise.idWorkout == workoutId
             }
             exercisesContent(listOfExercises)
-            Log.d("ACABOU", "FOI???: $listOfExercises")
         }
         is Response.Failure -> print(exercisesResponse.e)
     }

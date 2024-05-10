@@ -3,13 +3,11 @@ package com.matheus.treinosapp.data.repository
 import android.net.Uri
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.matheus.treinosapp.common.Constants.CREATED_AT
-import com.matheus.treinosapp.common.Constants.IMAGES
-import com.matheus.treinosapp.common.Constants.IMAGE_NAME
-import com.matheus.treinosapp.common.Constants.UID
-import com.matheus.treinosapp.common.Constants.URL
+import com.matheus.treinosapp.utils.Constants.CREATED_AT
+import com.matheus.treinosapp.utils.Constants.IMAGES
+import com.matheus.treinosapp.utils.Constants.UID
+import com.matheus.treinosapp.utils.Constants.URL
 import com.matheus.treinosapp.domain.model.Response
 import com.matheus.treinosapp.domain.repository.AddImageToStorageResponse
 import com.matheus.treinosapp.domain.repository.AddImageUrlToFirestoreResponse

@@ -19,7 +19,6 @@ typealias DeleteExerciseResponse = Response<Boolean>
 
 interface FirestoreRepository {
 
-    //fun getWorkouts(): Flow<Response<List<Workout>>>
     fun getWorkouts(): Flow<WorkoutsResponse>
 
     suspend fun addWorkout(id: String,name: String, description: String, timestamp: String, userId: String, userName: String) : AddWorkoutResponse
