@@ -7,7 +7,21 @@ Este aplicativo foi desenvolvido para a etapa de testes da vaga de estágio em d
 
 ## 🏠 Tecnologias utilizadas
 
-Kotlin
+<ul>
+  <li>Kotlin</li>
+  <li>Jetpack Compose</li>
+  <li>Kotlin Coroutines e Flow</li>
+  <li>MVVM</li>
+  <li>Hilt (injeção de dependência)</li>
+  <li>Clean Architecture</li>
+  <li>Navigation</li>
+  <li>Coil</li>
+  <li>Firestore</li>
+  <li>Storage</li>
+  <li>Auth</li>
+
+</ul>
+
 
 
 ## 💻 Screenshots
